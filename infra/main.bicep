@@ -23,3 +23,18 @@ resource rg 'Microsoft.Resources/resourceGroups@2022-09-01' = {
   location: location
   tags: tags
 }
+
+module Sentinel './Sentinel.bicep' = {
+  name: 'sentinel'
+  scope: rg
+  params: {
+    
+    retentionInDays: 30
+    contentSolutions: [
+      'Amazon Web Services'
+      'Microsoft Entra ID'
+      'Azure Logic Apps'
+    ]
+    workspaceName: 'sentinel-${environmentName}'
+  }
+}
